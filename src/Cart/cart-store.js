@@ -2,12 +2,12 @@ import { writable } from "svelte/store";
 
 let items = [
   {
-    id: "p1",
+    id: "p3",
     title: "Test",
     price: 9.99
   },
   {
-    id: "p2",
+    id: "p4",
     title: "Test",
     price: 9.99
   }

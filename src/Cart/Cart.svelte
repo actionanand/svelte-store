@@ -1,11 +1,20 @@
 <script>
+  import { onDestroy } from 'svelte';
+
   import cartItems from './cart-store';
+
   import CartItem from './CartItem.svelte';
 
   let items;
 
-  cartItems.subscribe(myItems => {
+  const unsub = cartItems.subscribe(myItems => {
     items = myItems;
+  });
+
+  onDestroy(() => {
+    if(unsub) {
+      unsub();
+    }
   });
   
 </script>
@@ -28,6 +37,8 @@
 <section>
   <h1>Cart</h1>
   <ul>
+    <!-- subcription at html level, prepend with '$' -->
+    <!-- {#each $cartItems as item (item.id)} -->
     {#each items as item (item.id)}
       <CartItem id={item.id} title={item.title} price={item.price} />
     {:else}

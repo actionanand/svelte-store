@@ -1,18 +1,22 @@
 <script>
-  import CartItem from "./CartItem.svelte";
+  import { onDestroy } from 'svelte';
 
-  export let items = [
-    {
-      id: "p1",
-      title: "Test",
-      price: 9.99
-    },
-    {
-      id: "p2",
-      title: "Test",
-      price: 9.99
+  import cartItems from './cart-store';
+
+  import CartItem from './CartItem.svelte';
+
+  let items;
+
+  const unsub = cartItems.subscribe(myItems => {
+    items = myItems;
+  });
+
+  onDestroy(() => {
+    if(unsub) {
+      unsub();
     }
-  ];
+  });
+  
 </script>
 
 <style>
@@ -33,6 +37,8 @@
 <section>
   <h1>Cart</h1>
   <ul>
+    <!-- subcription at html level, prepend with '$' -->
+    <!-- {#each $cartItems as item (item.id)} -->
     {#each items as item (item.id)}
       <CartItem id={item.id} title={item.title} price={item.price} />
     {:else}

@@ -1,8 +1,11 @@
 <script>
-  import Cart from "./Cart/Cart.svelte";
-  import Products from "./Products/Products.svelte";
+  import Cart from './Cart/Cart.svelte';
+  import Products from './Products/Products.svelte';
+  import Button from './UI/Button.svelte';
 
   export let appName;
+
+  let showCart = true;
 </script>
 
 <style>
@@ -22,5 +25,8 @@
   <h1 class="capitalize-it">{appName}</h1>
 </div>
 
-<Cart />
+<Button on:click="{() => showCart = !showCart}">Toggle Cart</Button>
+{#if showCart}
+  <Cart />
+{/if}
 <Products />

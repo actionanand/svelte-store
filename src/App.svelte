@@ -12,6 +12,8 @@
   .header-wrap {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .capitalize-it {
@@ -23,9 +25,12 @@
 
 <div class="header-wrap">
   <h1 class="capitalize-it">{appName}</h1>
+  <br>
+  <div>
+    <Button on:click="{() => showCart = !showCart}">Toggle Cart</Button>
+  </div>
 </div>
 
-<Button on:click="{() => showCart = !showCart}">Toggle Cart</Button>
 {#if showCart}
   <Cart />
 {/if}

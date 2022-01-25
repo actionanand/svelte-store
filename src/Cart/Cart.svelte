@@ -5,6 +5,8 @@
 
   import CartItem from './CartItem.svelte';
 
+  import { timer } from '../timer-store.js';
+
   let items;
 
   const unsub = cartItems.subscribe(myItems => {
@@ -45,4 +47,5 @@
       <p>No items in cart yet!</p>
     {/each}
   </ul>
+  <h3>Timer : {$timer}</h3>
 </section>

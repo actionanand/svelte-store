@@ -119,3 +119,67 @@ surge public my-project.surge.sh
 
 - [Replacement for git clone - degit](https://dev.to/vuelancer/replacement-for-git-clone-degit-3lf1)
 - [npm-run-all NPM Package](https://www.npmjs.com/package/npm-run-all)
+
+### Store additional info
+
+1. [Derived Stores](https://svelte.dev/tutorial/derived-stores)
+
+You can have a store which produces values based on another store + some adjustment logic.
+
+Example:
+
+```js
+import { readable, derived } from 'svelte/store';
+ 
+export const time = readable(new Date(), function start(set) {
+    const interval = setInterval(() => {
+        set(new Date());
+    }, 1000);
+ 
+    return function stop() {
+        clearInterval(interval);
+    };
+});
+ 
+const start = new Date();
+ 
+export const elapsed = derived(
+    time,
+    $time => Math.round(($time - start) / 1000)
+);
+```
+
+2. [Store Bindings](https://svelte.dev/tutorial/store-bindings)
+
+Allows you to bind: to values stored in a store.
+
+Example:
+
+`store.js`
+
+```js
+import { writable, derived } from 'svelte/store';
+ 
+export const name = writable('world');
+ 
+export const greeting = derived(
+    name,
+    $name => `Hello ${$name}!`
+);
+```
+
+`App.svelte`
+
+```svelte
+<script>
+    import { name, greeting } from './stores.js';
+</script>
+ 
+<h1>{$greeting}</h1>
+<input bind:value={$name}>
+ 
+<button on:click="{() => $name += '!'}">
+    Add exclamation mark!
+</button>
+```
+
